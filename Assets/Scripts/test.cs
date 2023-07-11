@@ -3,47 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Text;
+using UnityEditor;
 
 public class test : MonoBehaviour
 {
-    public Tilemap input;
-    private void Start() {
-        InputReader inputReader = new InputReader(input);
+    public Tilemap inputTileMap;
+    public Tilemap outputTileMap;
+    public int patternSize = 2;
+    public int maxInteration = 500;
+    public int outputWidth = 5;
+    public int outputHeight = 5;
+    public bool equalWeights = false;
+
+    ValueManager<TileBase> valueManager;
+    WFCCore wfccore;
+    PatternManager patternManager;
+    TileMapOutput tileMapOutput;
+
+    private void Start()
+    {
+        CreateWFC();
+        
+    }
+
+    public void CreateWFC()
+    {
+        Debug.Log("Creating WFC");
+        InputReader inputReader = new InputReader(inputTileMap);
         var grid = inputReader.ReadInput();
-        ValueManager<TileBase> valueManager = new ValueManager<TileBase>(grid);
-        PatternManager patternManager = new PatternManager(2);
-        patternManager.processGrid(valueManager, false);
-        WFCCore wfccore = new WFCCore(6, 6, 500, patternManager);
+        valueManager = new ValueManager<TileBase>(grid);
+        patternManager = new PatternManager(2);
+        patternManager.processGrid(valueManager, equalWeights);
+        wfccore = new WFCCore(outputWidth, outputHeight, maxInteration, patternManager);
+    }
+
+    public void CreateTileMap()
+    {
+        tileMapOutput = new TileMapOutput(valueManager, outputTileMap);
         var result = wfccore.CreateOputputGrid();
+        tileMapOutput.CreateOutputImage(patternManager, result, outputWidth, outputHeight);
+    }
 
-
-
-
-
-
-        // for (int i = 0; i < grid.Length; i++)
-        // {
-        //     for (int j = 0; j < grid[0].Length; j++)
-        //     {
-        //         Debug.Log("Row: " + i + " Col: " + j + " tile name: " + grid[i][j].Value);
-        //     }
-        // }
-        StringBuilder sb = new StringBuilder();
-        List<string> list = new List<string>();
-        for (int i = 0; i < grid.Length; i++)
-        {
-            sb = new StringBuilder();
-            for (int j = 0; j < grid[0].Length; j++)
-            {
-                sb.Append(valueManager.GetGridValuesIncludingOffset(j, i));
-                sb.Append(" ");
-            }
-            list.Add(sb.ToString());
-        }
-        list.Reverse();
-        foreach (var item in list)
-        {
-            Debug.Log(item);
-        }
+    public void SaveTileMap(){
+        var path = "Assets/Output/TileMapOutput.asset";
+        AssetDatabase.CreateAsset(outputTileMap, path);
     }
 }
