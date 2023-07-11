@@ -32,7 +32,7 @@ public class test : MonoBehaviour
         InputReader inputReader = new InputReader(inputTileMap);
         var grid = inputReader.ReadInput();
         valueManager = new ValueManager<TileBase>(grid);
-        patternManager = new PatternManager(2);
+        patternManager = new PatternManager(patternSize);
         patternManager.processGrid(valueManager, equalWeights);
         wfccore = new WFCCore(outputWidth, outputHeight, maxInteration, patternManager);
     }

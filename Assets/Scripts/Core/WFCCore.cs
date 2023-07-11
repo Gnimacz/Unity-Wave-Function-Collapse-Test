@@ -44,6 +44,7 @@ public class WFCCore
             }
             else
             {
+                // if(iteration <= 1) continue;
                 Debug.Log("Solved on: " + iteration);
                 this.outputGrid.PrintResultsToConsole();
                 break;
