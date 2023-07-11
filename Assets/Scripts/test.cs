@@ -10,6 +10,17 @@ public class test : MonoBehaviour
     private void Start() {
         InputReader inputReader = new InputReader(input);
         var grid = inputReader.ReadInput();
+        ValueManager<TileBase> valueManager = new ValueManager<TileBase>(grid);
+        PatternManager patternManager = new PatternManager(2);
+        patternManager.processGrid(valueManager, false);
+        WFCCore wfccore = new WFCCore(5, 5, 500, patternManager);
+        var result = wfccore.CreateOutputGrid();
+
+
+
+
+
+
         // for (int i = 0; i < grid.Length; i++)
         // {
         //     for (int j = 0; j < grid[0].Length; j++)
@@ -17,7 +28,6 @@ public class test : MonoBehaviour
         //         Debug.Log("Row: " + i + " Col: " + j + " tile name: " + grid[i][j].Value);
         //     }
         // }
-        ValueManager<TileBase> valueManager = new ValueManager<TileBase>(grid);
         StringBuilder sb = new StringBuilder();
         List<string> list = new List<string>();
         for (int i = 0; i < grid.Length; i++)

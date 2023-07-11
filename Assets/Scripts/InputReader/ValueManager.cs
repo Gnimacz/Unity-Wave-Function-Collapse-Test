@@ -66,14 +66,11 @@ public class ValueManager<T>
         if(x < 0 && y < 0){
             return GetGridValue(xMax + x, yMax + y);
         }
-        if(x < 0 && yMax >= 0){
+        if(x < 0 && y >= yMax){
             return GetGridValue(xMax + x, y - yMax);
         }
-        if(y < 0 && xMax >= 0){
+        if(x >= xMax && y < 0){
             return GetGridValue(x - xMax, yMax + y);
-        }
-        if(x >= xMax && y >= yMax){
-            return GetGridValue(x - xMax, y - yMax);
         }
         if(x < 0){
             return GetGridValue(xMax + x, y);
@@ -87,6 +84,25 @@ public class ValueManager<T>
         if(y >= yMax){
             return GetGridValue(x, y - yMax);
         }
+        
+        // if(y < 0 && xMax >= 0){
+        //     return GetGridValue(x - xMax, yMax + y);
+        // }
+        // if(x >= xMax && y >= yMax){
+        //     return GetGridValue(x - xMax, y - yMax);
+        // }
+        // if(x < 0){
+        //     return GetGridValue(xMax + x, y);
+        // }
+        // if(x >= xMax){
+        //     return GetGridValue(x - xMax, y);
+        // }
+        // if(y < 0){
+        //     return GetGridValue(x, yMax + y);
+        // }
+        // if(y >= yMax){
+        //     return GetGridValue(x, y - yMax);
+        // }
         return GetGridValue(x, y);
     }
 
@@ -100,5 +116,13 @@ public class ValueManager<T>
             }
         }
         return arrayToReturn;
+    }
+
+    internal Vector2 GetGridSize()
+    {
+        if(grid == null){
+            return new Vector2(0, 0);
+        }
+        return new Vector2(grid[0].Length, grid.Length);
     }
 }
