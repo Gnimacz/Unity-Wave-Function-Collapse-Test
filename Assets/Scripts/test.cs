@@ -13,8 +13,8 @@ public class test : MonoBehaviour
         ValueManager<TileBase> valueManager = new ValueManager<TileBase>(grid);
         PatternManager patternManager = new PatternManager(2);
         patternManager.processGrid(valueManager, false);
-        WFCCore wfccore = new WFCCore(5, 5, 500, patternManager);
-        var result = wfccore.CreateOutputGrid();
+        WFCCore wfccore = new WFCCore(6, 6, 500, patternManager);
+        var result = wfccore.CreateOputputGrid();
 
 
 

@@ -12,7 +12,7 @@ public enum Direction
 
 public static class DirectionHelper
 {
-    public static Direction GetOppositeDirection(Direction direction)
+    public static Direction GetOppositeDirection(this Direction direction)
     {
         switch (direction)
         {
