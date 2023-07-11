@@ -23,6 +23,7 @@ public class test : MonoBehaviour
     private void Start()
     {
         CreateWFC();
+        CreateTileMap();
         
     }
 
